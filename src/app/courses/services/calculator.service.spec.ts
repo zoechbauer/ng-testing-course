@@ -27,7 +27,7 @@ describe('CalculatorService', () => {
     expect(loggerSpy.log).toHaveBeenCalledTimes(1);
   });
 
-  fit('should subtract 2 numbers', () => {
+  it('should subtract 2 numbers', () => {
     console.log('subtract test');
     const result = calculator.subtract(5, 3);
     expect(result).toBe(2, 'unexpected substract result');
