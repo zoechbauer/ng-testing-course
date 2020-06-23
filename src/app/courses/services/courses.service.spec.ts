@@ -4,7 +4,7 @@ import {
   HttpClientTestingModule,
 } from '@angular/common/http/testing';
 import { CoursesService } from './courses.service';
-import { COURSES } from '../../../../server/db-data';
+import { COURSES, findLessonsForCourse } from '../../../../server/db-data';
 import { Course } from '../model/course';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -112,6 +112,29 @@ describe('CoursesService', () => {
     req.flush('Save course failed', {
       status: 500,
       statusText: 'Internal Server Error',
+    });
+  });
+
+  it('should retrieve lessons of course', () => {
+    coursesService.findLessons(12).subscribe((lessons) => {
+      console.log('lessons', lessons);
+      expect(lessons).toBeTruthy();
+      expect(lessons.length).toBe(3, 'wrong number of lessons');
+    });
+
+    const req = httpTestingController.expectOne(
+      (req) => req.url === '/api/lessons'
+    );
+
+    expect(req.request.method).toEqual('GET');
+    expect(req.request.params.get('courseId')).toBe('12');
+    expect(req.request.params.get('filter')).toBe('');
+    expect(req.request.params.get('sortOrder')).toBe('asc');
+    expect(req.request.params.get('pageNumber')).toBe('0');
+    expect(req.request.params.get('pageSize')).toBe('3');
+
+    req.flush({
+      payload: findLessonsForCourse(12).slice(0, 3),
     });
   });
 });
