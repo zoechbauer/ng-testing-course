@@ -5,6 +5,7 @@ import {
 } from '@angular/common/http/testing';
 import { CoursesService } from './courses.service';
 import { COURSES } from '../../../../server/db-data';
+import { Course } from '../model/course';
 
 describe('CoursesService', () => {
   let coursesService: CoursesService;
@@ -19,6 +20,10 @@ describe('CoursesService', () => {
 
     httpTestingController = TestBed.get(HttpTestingController);
     coursesService = TestBed.get(CoursesService);
+  });
+
+  afterEach(() => {
+    httpTestingController.verify();
   });
 
   it('should retrieve all courses', () => {
@@ -56,5 +61,31 @@ describe('CoursesService', () => {
     expect(req.request.method).toEqual('GET');
 
     req.flush(COURSES[12]);
+  });
+
+  it('should save course data', () => {
+    console.log('save course data test');
+
+    const changes: Partial<Course> = {
+      titles: { description: 'Angular Course' },
+    };
+
+    coursesService.saveCourse(12, changes).subscribe((course) => {
+      console.log('updated course', course);
+      expect(course.id).toBe(12);
+    });
+
+    const req = httpTestingController.expectOne('/api/courses/12');
+
+    expect(req.request.method).toEqual('PUT');
+
+    expect(req.request.body.titles.description).toEqual(
+      changes.titles.description
+    );
+
+    req.flush({
+      ...COURSES[12],
+      ...changes,
+    });
   });
 });
