@@ -27,9 +27,17 @@ describe('CalculatorService', () => {
     expect(loggerSpy.log).toHaveBeenCalledTimes(1);
   });
 
-  it('should subtract 2 numbers', () => {
+  fit('should subtract 2 numbers', () => {
     console.log('subtract test');
     const result = calculator.subtract(5, 3);
     expect(result).toBe(2, 'unexpected substract result');
+  });
+
+  xit('should no be tested', () => {
+    fail();
+  });
+
+  it('should be pending', () => {
+    pending();
   });
 });
