@@ -72,7 +72,7 @@ describe('CoursesService', () => {
     };
 
     coursesService.saveCourse(12, changes).subscribe((course) => {
-      console.log('updated course', course);
+      // console.log('updated course', course);
       expect(course.id).toBe(12);
     });
 
@@ -117,7 +117,7 @@ describe('CoursesService', () => {
 
   it('should retrieve lessons of course', () => {
     coursesService.findLessons(12).subscribe((lessons) => {
-      console.log('lessons', lessons);
+      // console.log('lessons', lessons);
       expect(lessons).toBeTruthy();
       expect(lessons.length).toBe(3, 'wrong number of lessons');
     });
