@@ -33,7 +33,7 @@ describe('CalculatorService', () => {
     expect(result).toBe(2, 'unexpected substract result');
   });
 
-  xit('should no be tested', () => {
+  xit('should not be tested', () => {
     fail();
   });
 
