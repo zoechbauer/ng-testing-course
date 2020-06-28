@@ -7,6 +7,8 @@ import { By } from '@angular/platform-browser';
 import { sortCoursesBySeqNo } from '../home/sort-course-by-seq';
 import { Course } from '../model/course';
 import { setupCourses } from '../common/setup-test-data';
+// necessary for karma debug
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CoursesCardListComponent', () => {
   let component: CoursesCardListComponent;
@@ -15,7 +17,7 @@ describe('CoursesCardListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [CoursesModule],
+      imports: [CoursesModule, RouterTestingModule],
     })
       .compileComponents()
       .then(() => {

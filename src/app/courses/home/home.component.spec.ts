@@ -23,6 +23,8 @@ import { of } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { click } from '../common/test-utils';
 import { Course } from '../model/course';
+// necessary for karma debug
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('HomeComponent', () => {
   let fixture: ComponentFixture<HomeComponent>;
@@ -43,7 +45,7 @@ describe('HomeComponent', () => {
       'findAllCourses',
     ]);
     TestBed.configureTestingModule({
-      imports: [CoursesModule, NoopAnimationsModule],
+      imports: [CoursesModule, NoopAnimationsModule, RouterTestingModule],
       providers: [{ provide: CoursesService, useValue: coursesServiceSpy }],
     })
       .compileComponents()
