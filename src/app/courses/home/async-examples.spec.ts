@@ -29,7 +29,7 @@ fdescribe('Async Testing Examples', () => {
     expect(test).toBeTruthy();
   }));
 
-  fit('Asynchronous test example with setTimeout: fakeAsync & flush', fakeAsync(() => {
+  it('Asynchronous test example with setTimeout: fakeAsync & flush', fakeAsync(() => {
     let test = false;
 
     setTimeout(() => {
@@ -47,6 +47,37 @@ fdescribe('Async Testing Examples', () => {
 
     flush();
 
+    expect(test).toBeTruthy();
+  }));
+
+  fit('Asynchronous test example with setTimeout & Promise:', fakeAsync(() => {
+    let test = false;
+
+    setTimeout(() => {
+      console.log('setTimeout immediate callback triggered');
+    });
+
+    setTimeout(() => {
+      console.log('setTimeout after 2 sec callback triggered');
+    }, 2000);
+
+    setTimeout(() => {
+      console.log('setTimeout after 1 sec callback triggered');
+      test = true;
+    }, 1000);
+
+    Promise.resolve()
+      .then(() => {
+        console.log('Promise first then evaluated');
+        return Promise.resolve();
+      })
+      .then(() => {
+        console.log('Promise second then evaluated');
+        test = true;
+      });
+
+    flush();
+    console.log('Running test assertion');
     expect(test).toBeTruthy();
   }));
 });
