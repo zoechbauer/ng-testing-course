@@ -1,4 +1,6 @@
 import { fakeAsync, flush, tick, flushMicrotasks } from '@angular/core/testing';
+import { of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 fdescribe('Async Testing Examples', () => {
   it('Asynchronous test example with Jasmine done', (done: DoneFn) => {
@@ -81,7 +83,7 @@ fdescribe('Async Testing Examples', () => {
     expect(test).toBeTruthy();
   }));
 
-  fit('Asynchronous test example with setTimeout & Promise: Microtask & Macrotask', fakeAsync(() => {
+  it('Asynchronous test example with setTimeout & Promise: Microtask & Macrotask', fakeAsync(() => {
     let counter = 0;
 
     Promise.resolve().then(() => {
@@ -101,5 +103,37 @@ fdescribe('Async Testing Examples', () => {
 
     tick(500);
     expect(counter).toBe(11);
+  }));
+
+  fit('Asynchronous test example with Observables - sync', () => {
+    let test = false;
+
+    console.log('Creating Observable');
+    const test$ = of(test);
+
+    test$.subscribe((val) => {
+      expect(val).toBe(false);
+      test = true;
+    });
+
+    console.log('Running test assertion');
+    expect(test).toBe(true);
+  });
+
+  fit('Asynchronous test example with Observables - async', fakeAsync(() => {
+    let test = false;
+
+    console.log('Creating Observable');
+    const test$ = of(test).pipe(delay(1000));
+
+    test$.subscribe((val) => {
+      expect(val).toBe(false);
+      test = true;
+    });
+
+    tick(1000);
+
+    console.log('Running test assertion');
+    expect(test).toBe(true);
   }));
 });
