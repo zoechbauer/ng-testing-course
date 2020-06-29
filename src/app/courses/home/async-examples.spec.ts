@@ -12,7 +12,7 @@ fdescribe('Async Testing Examples', () => {
     }, 1000);
   });
 
-  fit('Asynchronous test example with setTimeout: fakeAsync & tick', fakeAsync(() => {
+  it('Asynchronous test example with setTimeout: fakeAsync & tick', fakeAsync(() => {
     let test = false;
 
     setTimeout(() => {
@@ -25,6 +25,27 @@ fdescribe('Async Testing Examples', () => {
     tick(499);
     console.log('some computations');
     tick(1);
+
+    expect(test).toBeTruthy();
+  }));
+
+  fit('Asynchronous test example with setTimeout: fakeAsync & flush', fakeAsync(() => {
+    let test = false;
+
+    setTimeout(() => {
+      console.log('setTimeout immediate');
+    });
+
+    setTimeout(() => {
+      console.log('setTimeout 1');
+    }, 1500);
+
+    setTimeout(() => {
+      console.log('setTimeout 2: running assertions');
+      test = true;
+    }, 1000);
+
+    flush();
 
     expect(test).toBeTruthy();
   }));
