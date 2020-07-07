@@ -1,7 +1,7 @@
-// Continous Integration server
-// configuration of Travis CI server
-// https://travis-ci.org/
-// Travis CI will run the test: npm run e2e whenever github sources change
+# Continous Integration server
+# configuration of Travis CI server
+# https://travis-ci.org/
+# Travis CI will run the test: npm run e2e whenever source is committed to github
 
 language: node_js
 node_js:
