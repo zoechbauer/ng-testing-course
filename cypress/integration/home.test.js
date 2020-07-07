@@ -26,7 +26,7 @@ describe('Home Page', () => {
     cy.get('.mat-tab-label').last().click();
 
     cy.get('.mat-tab-body-active .mat-card-title')
-      .its(length)
+      .its('length')
       .should('be.gt', 1);
 
     cy.get('.mat-tab-body-active .mat-card-title')
